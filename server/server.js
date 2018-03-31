@@ -15,6 +15,16 @@ var server=http.createServer(app);
 var io=socketIO(server);
 io.on('connection',(socket)=>{
   console.log('New user conected');
+  //we send data from server to client side here using this socket.emit
+  socket.emit('newMessage',{
+    from:'satyajeet',
+    text:'Why so serious?',
+    createdAt:123
+  });
+
+  socket.on('createMessage',(message)=>{
+    console.log('createMessage',message);
+  })
   socket.on('disconnect',()=>{
     console.log('User was Disconnected');
   });
