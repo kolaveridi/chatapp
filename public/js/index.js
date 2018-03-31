@@ -3,11 +3,7 @@
    socket.on('connect',function(){
      console.log('Connected');
      // going from client to server side
-     socket.emit('createMessage',{
-       from:'Satya',
-       to:'mayuko@gmail.com',
-       text:'Lets watch wwe',
-     });
+     
    });
    socket.on('disconnect',function(){
      console.log('Disconnected');
