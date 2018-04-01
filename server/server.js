@@ -16,13 +16,15 @@ var io=socketIO(server);
 io.on('connection',(socket)=>{
   console.log('New user conected');
 
-      socket.emit('newMessage',generateMessage('Admin','Welcome to Chat App'));
+      socket.emit('newMessage',generateMessage('Admin','Welcome to Chat App'));// this shows up in developers tool
       socket.broadcast.emit('newMessage',generateMessage('Admin','New user joined'));
 
-      socket.on('createMessage',(message)=>{
-        console.log('createMessage',message);
-        io.emit('newMessage',generateMessage(message.from,message.text));
-
+      socket.on('createMessage',(message,callback)=>{
+        //this is from client side to server side and look at your terminal to see this
+        console.log('createdMessage is ',message);// this shows up on terminal
+        io.emit('newMessage',generateMessage(message.from,message.text));// this shows up in browser console
+        callback('This is from server');
+        // the above is a callback from server to client side
     //this will emit to all except the one which emits
 
     //socket.broadcast.emit('newMessage',{
