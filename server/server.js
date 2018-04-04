@@ -22,19 +22,17 @@ io.on('connection',(socket)=>{
       socket.on('createMessage',(message,callback)=>{
         //this is from client side to server side and look at your terminal to see this
         console.log('createdMessage is ',message);// this shows up on terminal
+
         io.emit('newMessage',generateMessage(message.from,message.text));// this shows up in browser console
         callback('This is from server');
-        // the above is a callback from server to client side
-    //this will emit to all except the one which emits
 
-    //socket.broadcast.emit('newMessage',{
-      //from:message.from,
-      //text:message.text,
-      //createdAt:new Date().getTime()
-    //});
-  socket.on('disconnect',()=>{
-    console.log('User was Disconnected');
-  });
+        socket.on('createLocationMessage',(coords)=>{
+        io.emit('newMessage',generateMessage('Admin',`${coords.latitude},${coords.longitude}`));
+        });
+
+         socket.on('disconnect',()=>{
+         console.log('User was Disconnected');
+      });
 });
 });
 server.listen(port,()=>{
