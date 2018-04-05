@@ -4,6 +4,7 @@ const express=require('express');
 const http=require('http');
 const socketIO=require('socket.io');
 const generateMessage=require('./utils/message');
+const generateLocationMessage=require('./utils/message');
 const publicPath=path.join(__dirname,'../public');
 console.log(publicPath);
 //port thing
@@ -22,18 +23,16 @@ io.on('connection',(socket)=>{
       socket.on('createMessage',(message,callback)=>{
         //this is from client side to server side and look at your terminal to see this
         console.log('createdMessage is ',message);// this shows up on terminal
-
         io.emit('newMessage',generateMessage(message.from,message.text));// this shows up in browser console
-        callback('This is from server');
-
+        callback('');
+      });
         socket.on('createLocationMessage',(coords)=>{
-        io.emit('newMessage',generateMessage('Admin',`${coords.latitude},${coords.longitude}`));
+        io.emit('newLocationMessage',generateLocationMessage('Admin',coords.latitude,coords.longitude));
         });
 
          socket.on('disconnect',()=>{
          console.log('User was Disconnected');
-      });
-});
+         });
 });
 server.listen(port,()=>{
   console.log('Server is up and running');

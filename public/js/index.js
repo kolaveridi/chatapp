@@ -15,6 +15,14 @@
      li.text(`${message.from}:${message.text}`);
      jQuery('#messsages').append(li);
    });
+   socket.on('newLocationMessage',function(message){
+     var li=jQuery('<li></li>');
+     var a =jQuery('<a target="_blank">My location</a>');
+     li.text(`${message.from}:`);
+     a.attr('href',message.url);
+     li.append(a);
+     jQuery('#messsages').append(li);
+   });
 
    jQuery('#message-form').on('submit',function(e){
      e.preventDefault();
@@ -22,7 +30,7 @@
        from:'User',
        text:jQuery('[name=message]').val()
      }, function(){
-
+            jQuery('[name=message]').val('')
      });
    });
 
